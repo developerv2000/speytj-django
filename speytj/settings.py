@@ -28,10 +28,10 @@ load_dotenv(BASE_DIR / ".env")
 SECRET_KEY = "django-insecure-q95prs^-)gxj)h=^d)tllyo$k7+9i7$v4!_5j_n5zwcoay-sm)"
 
 # Determine the environment from an environment variable, default to 'local'
-ENVIRONMENT = os.getenv('APP_ENVIRONMENT', 'local')
+APP_ENVIRONMENT = os.getenv('APP_ENVIRONMENT', 'local')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('APP_DEBUG', False)
+DEBUG = os.getenv('DEBUG', 'false').lower() == 'true'
 
 ALLOWED_HOSTS = []
 
