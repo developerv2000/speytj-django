@@ -27,8 +27,11 @@ load_dotenv(BASE_DIR / ".env")
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-q95prs^-)gxj)h=^d)tllyo$k7+9i7$v4!_5j_n5zwcoay-sm)"
 
+# Determine the environment from an environment variable, default to 'local'
+ENVIRONMENT = os.getenv('APP_ENVIRONMENT', 'local')
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('APP_DEBUG', False)
 
 ALLOWED_HOSTS = []
 
@@ -36,6 +39,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "core.apps.CoreConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -67,6 +71,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.media",  # Adds MEDIA_URL and MEDIA_ROOT
             ],
         },
     },
@@ -124,7 +129,27 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+# URL to use when referring to static files located in STATIC_ROOT
 STATIC_URL = "static/"
+
+# The absolute path to the directory where collectstatic will collect static files for deployment.
+# Ensure your web server (e.g., Nginx, Apache) is configured to serve files from the 'STATIC_ROOT'
+# directory at the 'STATIC_URL' path in production
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+
+# Media files (Uploaded content by users, such as images, videos, etc.)
+# https://docs.djangoproject.com/en/5.0/ref/settings/#std-setting-MEDIA_ROOT
+
+# URL to use when referring to media files located in MEDIA_ROOT
+# This will be the base URL for accessing uploaded files in the application.
+MEDIA_URL = "media/"
+
+# The absolute path to the directory where media files are stored.
+# This is where all user-uploaded content is stored and should be outside of your source code directory.
+# Ensure your web server is configured to serve files from this directory at the 'MEDIA_URL' path in production.
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
