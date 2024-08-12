@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+import sys
 
 from dotenv import load_dotenv
 
@@ -32,6 +33,12 @@ APP_ENVIRONMENT = os.getenv("APP_ENVIRONMENT", "local")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "false").lower() == "true"
+
+# SECURITY WARNING: don't run with debug toolbar turned on in production!
+ENABLE_DJANGO_DEBUG_TOOLBAR = os.getenv("ENABLE_DJANGO_DEBUG_TOOLBAR", "false").lower() == "true"
+
+# Check if running tests
+TESTING = "test" in sys.argv
 
 ALLOWED_HOSTS = []
 
@@ -157,3 +164,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Debug toolbar (django-debug-toolbar)
+# https://django-debug-toolbar.readthedocs.io/en/latest/index.html
+
+# Conditionally add 'debug_toolbar' to INSTALLED_APPS and MIDDLEWARE
+if ENABLE_DJANGO_DEBUG_TOOLBAR and not TESTING:
+    INSTALLED_APPS += ['debug_toolbar']
+    MIDDLEWARE = ['debug_toolbar.middleware.DebugToolbarMiddleware'] + MIDDLEWARE
+
+    # Configure INTERNAL_IPS for local development
+    INTERNAL_IPS = [
+        '127.0.0.1',
+        'localhost',
+    ]
