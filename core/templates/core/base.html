@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {# prettier-ignore #}
+    <title>{% block title %}SPEY{% endblock title %}</title>
+
+    {% load static %}
+
+    {# Normalize.css #}
+    <link rel="stylesheet" href="{% static 'core/plugins/normalize.css' %}" />
+
+    {# Main styles #}
+    <link rel="stylesheet" href="{% static 'core/css/styles.css' %}" />
+  </head>
+
+  {# prettier-ignore #}
+  <body class="body {% block body_class %}{% endblock %}">
+    {% include 'core/layouts/header.html' %}
+
+    {# prettier-ignore #}
+    <main class="main">{% block content %}{% endblock %}</main>
+
+    {% include 'core/layouts/footer.html' %}
+
+    {# Main script #}
+    <script src="{% static 'core/js/script.js' %}"></script>
+  </body>
+</html>
