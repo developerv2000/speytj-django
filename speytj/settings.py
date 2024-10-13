@@ -67,6 +67,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "speytj.urls"
 
+
+# string that should be displayed for invalid (e.g. misspelled) variables.
+TEMPLATE_STRING_IF_INVALID = "" if APP_ENVIRONMENT == "production" else "MISSING VARIABLE"
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -80,8 +84,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.media",  # Adds MEDIA_URL and MEDIA_ROOT
             ],
-            # string that should be displayed for invalid (e.g. misspelled) variables.
-            "string_if_invalid": "" if APP_ENVIRONMENT == "production" else "MISSING VARIABLE",
+            "string_if_invalid": TEMPLATE_STRING_IF_INVALID,
         },
     },
 ]
@@ -166,7 +169,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-# Debug toolbar (django-debug-toolbar)
+# Django debug toolbar (django-debug-toolbar)
 # https://django-debug-toolbar.readthedocs.io/en/latest/index.html
 
 # Conditionally add 'debug_toolbar' to INSTALLED_APPS and MIDDLEWARE
